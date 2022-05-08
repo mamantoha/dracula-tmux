@@ -39,28 +39,53 @@ battery_icon() {
   $bat_perc=$1
   $bat_stat=$2
 
+  battery_0=''
+  battery_10=''
+  battery_20=''
+  battery_30=''
+  battery_40=''
+  battery_50=''
+  battery_60=''
+  battery_70=''
+  battery_80=''
+  battery_90=''
+  battery_100=''
+
+  battery_charging_0=''
+  battery_charging_10=''
+  battery_charging_20=''
+  battery_charging_30=''
+  battery_charging_40=''
+  battery_charging_50=''
+  battery_charging_60=''
+  battery_charging_70=''
+  battery_charging_80=''
+  battery_charging_90=''
+  battery_charging_100=''
+
+
   if [[ (($bat_perc -ge 0) && ($bat_perc -lt 10)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_0; else echo $battery_0; fi
   elif [[ (($bat_perc -ge 10) && ($bat_perc -lt 20)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_10; else echo $battery_10; fi
   elif [[ (($bat_perc -ge 20) && ($bat_perc -lt 30)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_20; else echo $battery_20; fi
   elif [[ (($bat_perc -ge 30) && ($bat_perc -lt 40)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_30; else echo $battery_30; fi
   elif [[ (($bat_perc -ge 40) && ($bat_perc -lt 50)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_40; else echo $battery_40; fi
   elif [[ (($bat_perc -ge 50) && ($bat_perc -lt 60)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_50; else echo $battery_50; fi
   elif [[ (($bat_perc -ge 60) && ($bat_perc -lt 70)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_60; else echo $battery_60; fi
   elif [[ (($bat_perc -ge 70) && ($bat_perc -lt 80)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_70; else echo $battery_70; fi
   elif [[ (($bat_perc -ge 80) && ($bat_perc -lt 90)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_80; else echo $battery_80; fi
   elif [[ (($bat_perc -ge 90) && ($bat_perc -lt 100)) ]]; then
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_90; else echo $battery_90 ; fi
   else
-    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+    if [ "$bat_stat" = "AC" ]; then echo $battery_charging_100; else echo $battery_100; fi
   fi
 }
 
