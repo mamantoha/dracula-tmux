@@ -2,6 +2,9 @@
 # setting the locale, some users have issues with different locales, this forces the correct one
 export LC_ALL=en_US.UTF-8
 
+current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $current_dir/utils.sh
+
 linux_acpi() {
   arg=$1
   BAT=$(ls -d /sys/class/power_supply/BAT* | head -1)
@@ -29,6 +32,35 @@ linux_acpi() {
       *)
         ;;
     esac
+  fi
+}
+
+battery_icon() {
+  $bat_perc=$1
+  $bat_stat=$2
+
+  if [[ (($bat_perc -ge 0) && ($bat_perc -lt 10)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 10) && ($bat_perc -lt 20)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 20) && ($bat_perc -lt 30)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 30) && ($bat_perc -lt 40)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 40) && ($bat_perc -lt 50)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 50) && ($bat_perc -lt 60)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 60) && ($bat_perc -lt 70)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 70) && ($bat_perc -lt 80)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 80) && ($bat_perc -lt 90)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  elif [[ (($bat_perc -ge 90) && ($bat_perc -lt 100)) ]]; then
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
+  else
+    if [ "$bat_stat" = "AC" ]; then echo ''; else echo ''; fi
   fi
 }
 
@@ -112,15 +144,17 @@ main()
   bat_stat=$(battery_status)
   bat_perc=$(battery_percent)
 
+  bat_label=$(battery_icon $bat_perc $bat_stat)
+
   if [ -z "$bat_stat" ]; then # Test if status is empty or not
-    echo "$bat_label $bat_perc"
+    echo "$bat_label $bat_perc%"
   elif [ -z "$bat_perc" ]; then # In case it is a desktop with no battery percent, only AC power
     echo "$bat_label $bat_stat"
   else
-    echo "$bat_label $bat_stat $bat_perc"
+    # echo "$bat_label $bat_stat $bat_perc%"
+    echo "$bat_label $bat_perc%"
   fi
 }
 
 #run main driver program
 main
-
