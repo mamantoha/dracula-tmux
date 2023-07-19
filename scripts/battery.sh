@@ -35,6 +35,27 @@ linux_acpi() {
   fi
 }
 
+battery_icon() {
+  bat_perc=$1
+  bat_stat=$2
+
+  battery=(
+    '󰁺' '󰁺' '󰁻' '󰁼' '󰁽' '󰁾' '󰁿' '󰂀' '󰂁' '󰂂' '󰁹'
+  )
+
+  battery_charging=(
+    '󰢜' '󰢜' '󰂆' '󰂇' '󰂈' '󰢝' '󰂉' '󰢞' '󰂊' '󰂋' '󰂅'
+  )
+
+  idx=$(( bat_perc / 10 ))
+
+  if [ "$bat_stat" = "AC" ]; then
+    echo ${battery_charging[$idx]}
+  else
+    echo ${battery[$idx]}
+  fi
+}
+
 battery_percent()
 {
   # Check OS
@@ -45,7 +66,7 @@ battery_percent()
       ;;
 
     Darwin)
-      echo $(pmset -g batt | grep -Eo '[0-9]?[0-9]?[0-9]%')
+      echo $(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)
       ;;
 
     FreeBSD)
@@ -115,15 +136,17 @@ main()
   bat_stat=$(battery_status)
   bat_perc=$(battery_percent)
 
+  bat_label=$(battery_icon $bat_perc $bat_stat)
+
   if [ -z "$bat_stat" ]; then # Test if status is empty or not
-    echo "$bat_label $bat_perc"
+    echo "$bat_label $bat_perc%"
   elif [ -z "$bat_perc" ]; then # In case it is a desktop with no battery percent, only AC power
     echo "$bat_label $bat_stat"
   else
-    echo "$bat_label $bat_stat $bat_perc"
+    # echo "$bat_label $bat_stat $bat_perc%"
+    echo "$bat_label $bat_perc%"
   fi
 }
 
 #run main driver program
 main
-
